@@ -1,31 +1,48 @@
-# Dialed.gg Perfect Pitch Hack
+<h1 align="center">DIALED.GG PERFECT PITCH HACK</h1>
 
-Dialed.gg üzerindeki frekans bulma (Perfect Pitch) testini %100 doğrulukla geçmek için geliştirilmiş, Web Audio API kancalama (hooking) tabanlı bir JavaScript aracıdır.
+<p align="center">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+  <img src="https://img.shields.io/badge/Reverse_Engineering-1C1C1E?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Do%C4%9Fruluk-%25100-30D158?style=for-the-badge" />
+</p>
 
-## Teknik Analiz ve Tersine Mühendislik
+> [!NOTE]  
+> Bu araç, Dialed.gg üzerindeki frekans bulma (Perfect Pitch) testini **%100 nokta atışı doğrulukla** geçmek için Web Audio API kancalama (hooking) tekniğiyle yazılmıştır.
 
-Oyun, tarayıcı üzerinden basit bir AudioContext dinleyicisi ile hile yapılmasını engellemek için Sub-Oscillator (Alt-Bas) tekniğini kullanır. 
+## Teknik Analiz: Sub-Oscillator Tuzağı
 
-Sistem hedef sesi üretirken, asıl frekansın (fundamental) yanına sesi toklaştırmak ve algoritmaları şaşırtmak için hedefin tam yarısı frekansında (f/2) gizli bir bas katmanı ekler. Standart dinleme scriptleri havuzdaki en düşük değeri çektiği için bu tuzağa düşer ve her zaman hedefin yarısını gösterir.
+Oyun, tarayıcı üzerinden basit scriptlerle hile yapılmasını engellemek için **Sub-Oscillator (Alt-Bas)** tekniğini kullanır. Sesi toklaştırmak ve algoritmaları şaşırtmak için hedefin tam yarısı frekansında gizli bir katman eklenir.
 
-Bu araç, yakalanan frekansları gerçek zamanlı analiz eder. Eğer yakalanan sesler arasında 2x oranlı bir ilişki varsa, düşük olanın alt-bas tuzağı olduğunu saptar ve asıl hedefi nokta atışı küsuratıyla kullanıcıya sunar.
+```diff
+- Standart Dinleyicilerin Düştüğü Tuzak:
+- Havuzdaki en düşük frekansı alır ve her zaman hedefin yarısını gösterir.
 
-## Özellikler
++ Bu Aracın Kullandığı Matematiksel Analiz:
++ Hedef Ses: 634.67 Hz
++ Gizli Alt-Bas (Tuzak): 317.33 Hz
++ İşlem: Frekanslar arası 2x oran saptanır, alt-bas elenir ve nokta atışı değer yazdırılır.
+Teknik Özellikler
+Kusursuz Filtreleme: LFO (<20Hz) titreşimlerini ve Sub-Bass tuzaklarını ekarte eden harmonik analiz.
 
-* Nokta Atışı Algoritma: Sub-Bass ve LFO (<20Hz) tuzaklarını matematiksel filtreleme ile eler.
-* Event-Driven Mimari: Kronometre kullanmaz. Hedef ses tarayıcıda çalındığı an tetiklenir ve 150ms içinde analizi bitirip kendini kapatır.
-* İzole Dinleme: Kullanıcının frekansı bulmak için ayar çubuğuyla (slider) ürettiği sesleri görmezden gelir, sadece hedefe odaklanır.
-* Minimalist Flat UI: Apple arayüz standartlarına uygun, sol tarafa sabitlenmiş, dikkat dağıtmayan koyu mod tasarım.
+Event-Driven Mimari: Gecikme veya kronometre yok. Sitedeki ses çalındığı an tetiklenir, 150ms içinde analizi bitirir ve kendini sağır eder.
 
-## Kurulum ve Kullanım
+İzole Dinleme: Kullanıcının frekansı bulmak için ayar çubuğuyla (slider) ürettiği sesleri tamamen görmezden gelir.
 
-1. Dialed.gg adresinde ilgili teste girin.
-2. F12 tuşuyla Geliştirici Araçları'nı açıp Console sekmesine geçin.
-3. Script kodunu konsola yapıştırıp Enter'a basın.
-4. Ekranın solundaki panelden "DİNLEMEYİ BAŞLAT" butonuna tıklayın.
-5. Sitedeki "Hedef Sesi Çal" düğmesine basın.
-6. Panel yeşile dönecek ve size tam frekans değerini verecektir.
+Modern UI Entegrasyonu: DOM üzerine doğrudan enjekte edilen, Apple tasarım standartlarına uygun, sol tarafa hizalı minimalist Koyu Mod (Dark Mode) arayüz.
 
-## Yasal Uyarı
+Kurulum & Kullanım
+Tarayıcıda Dialed.gg test ekranını açın.
 
-Bu proje tamamen eğitim, siber güvenlik araştırmaları ve Web API Tersine Mühendislik pratikleri amacıyla geliştirilmiştir. Kullanım sorumluluğu kullanıcıya aittir.
+F12 ile Geliştirici Araçları'nı açıp Console sekmesine geçin.
+
+Kodu konsola yapıştırıp Enter tuşuna basın.
+
+Ekranda beliren panelden DİNLEMEYİ BAŞLAT butonuna tıklayın.
+
+Sitedeki Hedef Sesi Çal düğmesine tıklayın.
+
+Arayüz anında hedef frekansı hesaplayıp yeşil renkle ekrana basacaktır.
+
+[!WARNING]
+
+Yasal Uyarı: Bu proje tamamen eğitim, Web API tersine mühendislik pratikleri ve siber güvenlik araştırmaları amacıyla geliştirilmiştir. Sorumluluk kullanıcıya aittir.
